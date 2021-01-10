@@ -1,0 +1,7 @@
+wheel
+pre-commit
+flake8
+black
+
+pillow
+arrow
