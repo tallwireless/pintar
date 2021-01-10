@@ -1,0 +1,6 @@
+clock:
+    order: 1
+    width: 100
+    cities:
+        Philadelphia: US/Eastern
+        Chicago: US/Central
