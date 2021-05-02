@@ -2,6 +2,20 @@ from .tile import Tile
 from PIL import Image, ImageFont
 from typing import NoReturn
 from .. import factory
+from .. import config as global_config
+from ..helpers import trim
+
+
+def generateBoundText(text: str, font: ImageFont) -> Image:
+    tmp_image, tmp_drawer = factory.imageFactory(10, 10)
+
+    (text_x, text_y) = tmp_drawer.textsize(text, font)
+    print(f"({text_x},{text_y})")
+    # create a temporary image so we can crop it
+    # this will eliminate any white space around the text
+    tmp_image, tmp_drawer = factory.imageFactory(text_x, text_y)
+    tmp_drawer.text((0, 0), text, 1, font)
+    return trim(tmp_image)
 
 
 class Text(Tile):
@@ -39,11 +53,12 @@ class Text(Tile):
         """
 
         # Set the defaults for the configuration
+
         config = {
             "alignment": "left",
             "vertical_alignment": "center",
             "size": 20,
-            "fontface": "/usr/share/fonts/truetype/tlwg/Laksaman-Bold.ttf",
+            "fontface": global_config.default_fontface,
         }
 
         # Overlay the user config on top of the default configuration
@@ -51,8 +66,8 @@ class Text(Tile):
 
         # Let's call the parent __init__ to do some basic stuffs
         super(Text, self).__init__(config)
-        self.config["font"] = ImageFont.truetype(
-            self.config["fontface"], self.config["size"]
+        self.config["font"] = factory.FontFactory(
+            self.config["size"], self.config["fontface"]
         )
 
     def generateImage(self) -> Image:
@@ -64,16 +79,7 @@ class Text(Tile):
                 A PIL.Image with the text inside
         """
         # how big is our text?
-        (text_x, text_y) = self.drawer.textsize(
-            self.config["text"], self.config["font"]
-        )
-
-        # create a temporary image so we can crop it
-        # this will eliminate any white space around the text
-        tmp_image, tmp_drawer = factory.imageFactory(text_x, text_y)
-        tmp_drawer.text((0, 0), self.config["text"], font=self.config["font"])
-        bbox = tmp_image.getbbox()
-        tmp_image.crop(bbox)
+        tmp_image = generateBoundText(self.config["text"], self.config["font"])
         text_x = tmp_image.width
         text_y = tmp_image.height
 
