@@ -1,4 +1,4 @@
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 from . import config
 from .tiles.tile import Tile
 import importlib
@@ -21,9 +21,20 @@ def imageFactory(x: int = config.size_x, y: int = config.size_y) -> (Image, Imag
     if y is None:
         y = config.size_y
 
-    i = Image.new(config.image_type, (x, y), config.background)
+    i = Image.new(config.image_type, (x, y), 255)
     d = ImageDraw.Draw(i)
     return (i, d)
+
+
+def FontFactory(size: int, fontface: str = config.default_fontface) -> ImageFont:
+    """
+    generate a PIL.ImageFont object to be used
+
+    Args:
+        size (int): size of the text
+
+    """
+    return ImageFont.truetype(fontface, size)
 
 
 def get_tile(tile: str) -> Tile:
