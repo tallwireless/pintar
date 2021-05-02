@@ -64,7 +64,6 @@ class Text(Tile):
                 A PIL.Image with the text inside
         """
         # how big is our text?
-        print("here")
         (text_x, text_y) = self.drawer.textsize(
             self.config["text"], self.config["font"]
         )
