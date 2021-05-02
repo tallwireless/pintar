@@ -5,3 +5,4 @@ black
 
 pillow
 arrow
+pyaml

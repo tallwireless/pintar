@@ -1,6 +1,28 @@
-clock:
-    order: 1
-    width: 100
-    cities:
-        Philadelphia: US/Eastern
-        Chicago: US/Central
+---
+output:
+    size_x: 1872
+    size_y: 1404
+    image_type: "L"
+    background: white
+
+tiles:
+    text:
+        x: 0
+        y: 0
+        size_x: 1872
+        size_y: 200
+        alignment: center
+        vertical_alignment: top
+        size: 60
+        text: The Desktop Clock
+
+#    clock:
+#        x: 0
+#        y: 200
+#        size_x: 400
+#        size_y: 1204
+#        alignment: vertical
+#        cities:
+#            Philadelphia: US/Eastern
+#            Chicago: US/Central
+#            UTC: UTC

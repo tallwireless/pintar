@@ -1,5 +1,6 @@
 from PIL import Image, ImageDraw, ImageFont
 import arrow
+import sys
 
 
 def drawText(xy, bbox, text, font, drawer, offset=0):
@@ -10,6 +11,7 @@ def drawText(xy, bbox, text, font, drawer, offset=0):
 
 
 def makeClock(city, timezone, height=250, width=355):
+    sys.stderr.write(f"{city}:{timezone}\n")
     fonts = {
         "time": ImageFont.truetype(
             "/home/charlesr/.local/share/fonts/NerdFonts/Noto Sans Mono Condensed Nerd Font Complete.ttf",
@@ -35,21 +37,27 @@ def makeClock(city, timezone, height=250, width=355):
     return img
 
 
-primary = Image.new("1", (800, 600), (1))
+primary = Image.new("L", (1872, 1404), ("white"))
 drawer = ImageDraw.Draw(primary)
 
-cities = {"Philadelphia": "US/Eastern", "Chicago": "US/Central"}
+cities = {"Philadelphia": "US/Eastern", "Chicago": "US/Central", "UTC": "UTC"}
+num_cities = len(cities)
 current = (0, 0)
 for city in cities:
-    img = makeClock(city, cities[city], width=int(primary.getbbox()[2] / 2))
+    img = makeClock(city, cities[city], width=int(primary.getbbox()[2] / num_cities))
     primary.paste(img, current)
-    current = (current[0] + img.getbbox()[2], current[1])
-
-drawer.line(
-    (primary.getbbox()[2] / 2, 0 + 40, primary.getbbox()[2] / 2, img.getbbox()[3] - 40),
-    width=2,
-)
+    #    current = (current[0] img.getbbox()[2], current[1] + img.getbox())
+    drawer.line(
+        (
+            primary.getbbox()[2] / num_cities,
+            0 + 40,
+            primary.getbbox()[2] / num_cities,
+            current[1] - 40,
+        ),
+        width=2,
+    )
 line_factor = 10
+
 drawer.line(
     (
         int(primary.getbbox()[2] / line_factor),
@@ -60,5 +68,4 @@ drawer.line(
     width=2,
 )
 
-
-primary.save("test.bmp", "BMP")
+primary.save(sys.stdout.buffer, format="BMP")
