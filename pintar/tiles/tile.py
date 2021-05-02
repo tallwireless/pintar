@@ -42,5 +42,6 @@ class Tile(object):
     def generateImage(self) -> Image:
         # Generates internal content and then returns the Python Pillow Image
         # object to be meraged into the primary image
-        print("not here")
-        pass
+        print(f"Something hasn't been implemented yet (see tile {self.tile_type})")
+        print("returning blank image")
+        return self.image
