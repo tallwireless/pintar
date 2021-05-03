@@ -35,7 +35,7 @@ class Clock(Tile):
 
         """
         num_cities = len(self.config["cities"])
-        layout = {"city": 60, "time": 150, "date": 50}
+        layout = {"city": 70, "time": 170, "date": 60}
         if self.config["alignment"] == "vertical":
             width = int(self.config["size_x"])
             height = int(self.config["size_y"] / num_cities)
@@ -57,7 +57,7 @@ class Clock(Tile):
             current = (current[0] + x_add, current[1] + y_add)
 
             if count < (total_cities - 1):
-                line_length = 5
+                line_length = 8
                 x_interval = int(width / line_length)
                 start_x = x_interval
                 end_x = x_interval * (line_length - 1)
