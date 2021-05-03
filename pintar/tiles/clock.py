@@ -27,7 +27,6 @@ class Clock(Tile):
         config = {"alignment": "horizonal", "cities": {"Local": "local"}}
 
         config.update(user_config)
-        print(config)
         super(Clock, self).__init__(config)
 
     def generateImage(self) -> Image:
