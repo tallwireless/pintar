@@ -33,6 +33,22 @@ for tile, tile_config in config["tiles"].items():
     tile_img = factory.generateTile(tile, tile_config)
     # Add the tile to the output image
     output_image.paste(tile_img, (tile_config["x"], tile_config["y"]))
+    if "border" in tile_config:
+        border = tile_config["border"]
+        for side in border:
+            border_width = border[side]["width"] if "width" in border[side] else 3
+            interval = border[side]["interval"] if "interval" in border[side] else 0
+            if side == "right":
+                start_x = tile_img.width
+                end_x = tile_img.width
+                if interval == 0:
+                    start_y = 0
+                    end_y = tile_img.height
+                else:
+                    start_y = int((tile_img.height / interval))
+                    end_y = int((tile_img.height / interval)) * (interval - 1)
+
+            drawer.line((start_x, start_y, end_x, end_y), border_width)
 
 # Write the image file out some where
 output_image.save("test.bmp", format="BMP")
