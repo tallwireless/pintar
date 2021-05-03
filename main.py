@@ -51,4 +51,4 @@ for tile, tile_config in config["tiles"].items():
             drawer.line((start_x, start_y, end_x, end_y), border_width)
 
 # Write the image file out some where
-output_image.save("test.bmp", format="BMP")
+output_image.save(sys.stdout.buffer, format="BMP")

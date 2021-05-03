@@ -6,23 +6,18 @@ output:
     background: white
 
 tiles:
-    text:
-        x: 0
-        y: 0
-        size_x: 1872
-        size_y: 200
-        alignment: center
-        vertical_alignment: top
-        size: 60
-        text: The Desktop Clock
-
-#    clock:
-#        x: 0
-#        y: 200
-#        size_x: 400
-#        size_y: 1204
-#        alignment: vertical
-#        cities:
-#            Philadelphia: US/Eastern
-#            Chicago: US/Central
-#            UTC: UTC
+    clock:
+        x: 10
+        y: 10
+        size_x: 600
+        size_y: 1404
+        border_width: 10
+        alignment: vertical
+        border:
+            right:
+                width: 5
+                interval: 20
+        cities:
+            Philly: US/Eastern
+            Chicago: US/Central
+            UTC: UTC
