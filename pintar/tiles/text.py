@@ -10,7 +10,6 @@ def generateBoundText(text: str, font: ImageFont) -> Image:
     tmp_image, tmp_drawer = factory.imageFactory(10, 10)
 
     (text_x, text_y) = tmp_drawer.textsize(text, font)
-    print(f"({text_x},{text_y})")
     # create a temporary image so we can crop it
     # this will eliminate any white space around the text
     tmp_image, tmp_drawer = factory.imageFactory(text_x, text_y)
@@ -98,7 +97,7 @@ class Text(Tile):
         if self.config["vertical_alignment"] == "top":
             start_y = 0
         elif self.config["vertical_alignment"] == "center":
-            start_y = (self.image.height - text_y) / 2
+            start_y = int((self.image.height - text_y) / 2)
         elif self.config["vertical_alignment"] == "bottom":
             start_y = self.image.height - text_y
         else:
