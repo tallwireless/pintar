@@ -1,10 +1,9 @@
+import pickle
 import arrow
 from .tile import Tile
 from .text import generateBoundText, generateRoundText
 from PIL import Image
 from .. import factory
-from ..helpers import debug
-from pprint import pformat as pp
 from urllib.request import urlopen
 import icalendar
 import recurring_ical_events
@@ -53,6 +52,7 @@ class Calendar(Tile):
         )
         self.image.paste(title, current)
         current = (current[0], current[1] + title.height + 10)
+
         dates = list(self.events.keys())
         dates.sort()
         finished = False
@@ -115,6 +115,17 @@ class Calendar(Tile):
         """
         Get the ical file
         """
+        try:
+            cache = open("/tmp/cache", "br")
+            (time, events_dict) = pickle.load(cache)
+            cache.close()
+            interval = arrow.now() - time
+            if interval.total_seconds() < self.config["cache"] * 60:
+                self.events = events_dict
+                return
+        except Exception:
+            pass
+
         events_dict = {}
         for source in self.config["sources"]:
             ics_file = urlopen(source["url"]).read()
@@ -122,7 +133,6 @@ class Calendar(Tile):
             start_date = arrow.now().date()
             end_date = arrow.now().shift(days=+7).date()
             events = recurring_ical_events.of(calendar).between(start_date, end_date)
-            debug(str(pp(events)))
             for event in events:
                 event_dict = {
                     "title": str(event["SUMMARY"]),
@@ -138,6 +148,12 @@ class Calendar(Tile):
 
             for date in events_dict:
                 events_dict[date].sort(key=self.__getStartTime)
+        try:
+            cache = open("/tmp/cache", "wb")
+            pickle.dump((arrow.now().datetime, events_dict), cache)
+            cache.close()
+        except Exception:
+            pass
 
         self.events = events_dict
 
