@@ -6,15 +6,47 @@ from .. import config as global_config
 from ..helpers import trim
 
 
-def generateBoundText(text: str, font: ImageFont) -> Image:
+def generateBoundText(
+    text: str, font: ImageFont, fill: int = None, font_color: int = 0
+) -> Image:
     tmp_image, tmp_drawer = factory.imageFactory(10, 10)
 
     (text_x, text_y) = tmp_drawer.textsize(text, font)
     # create a temporary image so we can crop it
     # this will eliminate any white space around the text
     tmp_image, tmp_drawer = factory.imageFactory(text_x, text_y)
-    tmp_drawer.text((0, 0), text, 1, font)
+    if fill is not None:
+        tmp_drawer.rectangle((0, 0, text_x, text_y), fill=fill)
+    tmp_drawer.text((0, 0), text, font_color, font)
     return trim(tmp_image)
+
+
+def generateRoundText(
+    text: str,
+    font: ImageFont,
+    margin: int,
+    width: int,
+    fill: int = None,
+    font_color: int = 0,
+    underline: int = 0,
+) -> Image:
+    title = generateBoundText(text, font=font, fill=fill, font_color=font_color)
+    image, drawer = factory.imageFactory(width, title.height + margin)
+    drawer.rounded_rectangle(
+        (0, 0, width, title.height + margin), radius=int(margin / 5), fill=fill
+    )
+    image.paste(title, (int((width - title.width) / 2), int(margin / 2)))
+    if underline:
+        drawer.line(
+            (
+                int((width - title.width) / 2),
+                int(margin / 2) + title.height,
+                int((width - title.width) / 2) + title.width,
+                int(margin / 2) + title.height,
+            ),
+            width=underline,
+        )
+    return image
 
 
 class Text(Tile):
