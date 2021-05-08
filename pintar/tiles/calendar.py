@@ -108,6 +108,9 @@ class Calendar(Tile):
 
         return self.image
 
+    def __getStartTime(self, event) -> arrow.Arrow:
+        return event["start"]
+
     def __updateEvents(self):
         """
         Get the ical file
@@ -132,6 +135,9 @@ class Calendar(Tile):
                 if start_date not in events_dict:
                     events_dict[start_date] = []
                 events_dict[start_date].append(event_dict)
+
+            for date in events_dict:
+                events_dict[date].sort(key=self.__getStartTime)
 
         self.events = events_dict
 
