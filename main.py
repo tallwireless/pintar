@@ -39,8 +39,8 @@ for tile, tile_config in config["tiles"].items():
             border_width = border[side]["width"] if "width" in border[side] else 3
             interval = border[side]["interval"] if "interval" in border[side] else 0
             if side == "right":
-                start_x = tile_img.width
-                end_x = tile_img.width
+                start_x = tile_img.width + tile_config["x"]
+                end_x = start_x
                 if interval == 0:
                     start_y = 0
                     end_y = tile_img.height
@@ -52,3 +52,4 @@ for tile, tile_config in config["tiles"].items():
 
 # Write the image file out some where
 output_image.save(sys.stdout.buffer, format="BMP")
+# output_image.save("test.bmp", format="BMP")
