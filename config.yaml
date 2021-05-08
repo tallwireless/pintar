@@ -6,6 +6,19 @@ output:
     background: white
 
 tiles:
+    calendar:
+      sources:
+        - fg: 255
+          bg: 120
+          url: http://andere.tallwireless.com/cal.ics
+        - fg: 0
+          bg: 220
+          url: https://calendar.google.com/calendar/ical/rumford.charles%40gmail.com/private-499bf5ead81dcfbbe5f838050fa2aca0/basic.ics
+      x: 620
+      y: 10
+      size_x: 872
+      size_y: 1000
+      cache: 30
     clock:
         x: 10
         y: 10
