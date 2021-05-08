@@ -1,4 +1,9 @@
 from PIL import Image, ImageChops
+import sys
+
+
+def debug(s):
+    sys.stderr.write(f"DEBUG: {s}\n")
 
 
 def trim(im):
