@@ -3,6 +3,7 @@ pre-commit
 flake8
 black
 
-pillow
-arrow
-pyaml
+pillow==8.2.0
+arrow==1.1.0
+pyaml==20.4.0
+iCalEvents==0.1.25

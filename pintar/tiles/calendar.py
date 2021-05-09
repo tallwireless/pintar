@@ -74,6 +74,15 @@ class Calendar(Tile):
             for event in self.events[date]:
                 if event["end"] < arrow.now():
                     continue
+                symbol = generateBoundText(
+                    event["symbol"],
+                    factory.FontFactory(
+                        size=60,
+                        fontface="/home/charlesr/.local/share/fonts/Meslo LG L Regular for Powerline.ttf",
+                    ),
+                    fill=event["bg"],
+                    font_color=event["fg"],
+                )
                 time = generateBoundText(
                     event["start"].strftime("%H:%M"),
                     factory.FontFactory(size=40),
@@ -99,6 +108,13 @@ class Calendar(Tile):
                 )
                 self.image.paste(time, (10, start_y + int(event_margin / 2)))
                 self.image.paste(summary, (150, start_y + int(event_margin / 2)))
+                self.image.paste(
+                    symbol,
+                    (
+                        self.config["size_x"] - symbol.width - 15,
+                        start_y + int(event_margin / 2),
+                    ),
+                )
                 current = (current[0], current[1] + time.height + 5 + event_margin)
                 if current[1] > self.config["size_y"] - time.height:
                     finished = True
@@ -134,12 +150,15 @@ class Calendar(Tile):
             end_date = arrow.now().shift(days=+7).date()
             events = recurring_ical_events.of(calendar).between(start_date, end_date)
             for event in events:
+                if self.__convert_vdate(event["DTEND"]) < arrow.now():
+                    continue
                 event_dict = {
                     "title": str(event["SUMMARY"]),
                     "start": self.__convert_vdate(event["DTSTART"]),
                     "end": self.__convert_vdate(event["DTEND"]),
                     "fg": source["fg"],
                     "bg": source["bg"],
+                    "symbol": source["symbol"] if "symbol" in source else " ",
                 }
                 start_date = event_dict["start"].date()
                 if start_date not in events_dict:

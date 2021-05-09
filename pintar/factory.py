@@ -26,6 +26,17 @@ def imageFactory(x: int = config.size_x, y: int = config.size_y) -> (Image, Imag
     return (i, d)
 
 
+def SymbolFontFactory(size: int, fontface: str = config.default_fontface) -> ImageFont:
+    """
+    generate a PIL.ImageFont object to be used
+
+    Args:
+        size (int): size of the text
+
+    """
+    return ImageFont.truetype(fontface, size)
+
+
 def FontFactory(size: int, fontface: str = config.default_fontface) -> ImageFont:
     """
     generate a PIL.ImageFont object to be used
