@@ -6,6 +6,12 @@ output:
     background: white
 
 tiles:
+    bandwidth:
+        x: 1500
+        y: 10
+        size_x: 375
+        size_y: 200
+
     calendar:
         sources:
             - fg: 255
@@ -20,7 +26,7 @@ tiles:
         y: 10
         size_x: 872
         size_y: 1000
-        cache: 0
+        cache: 30
     clock:
         x: 10
         y: 10
