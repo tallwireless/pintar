@@ -20,7 +20,7 @@ tiles:
         y: 10
         size_x: 872
         size_y: 1000
-        cache: 30
+        cache: 0
     clock:
         x: 10
         y: 10
