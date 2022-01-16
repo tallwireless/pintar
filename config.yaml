@@ -7,22 +7,22 @@ output:
 
 tiles:
     bandwidth:
-        x: 1500
-        y: 10
-        size_x: 375
-        size_y: 200
+        x: 520
+        y: 1025
+        size_x: 700
+        size_y: 375
 
     calendar:
         sources:
             - fg: 255
               symbol: ⚒
               bg: 120
-              url: http://andere.tallwireless.com/cal.ics
+              url: http://mail.tallwireless.com/cal.ics
             - fg: 0
               symbol: ⌂
               bg: 220
               url: https://calendar.google.com/calendar/ical/rumford.charles%40gmail.com/private-499bf5ead81dcfbbe5f838050fa2aca0/basic.ics
-        x: 620
+        x: 520
         y: 10
         size_x: 872
         size_y: 1000
@@ -30,7 +30,7 @@ tiles:
     clock:
         x: 10
         y: 10
-        size_x: 600
+        size_x: 500
         size_y: 1404
         border_width: 10
         alignment: vertical

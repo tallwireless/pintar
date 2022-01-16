@@ -78,7 +78,7 @@ class Calendar(Tile):
                     event["symbol"],
                     factory.FontFactory(
                         size=60,
-                        fontface="/home/charlesr/.local/share/fonts/Meslo LG L Regular for Powerline.ttf",
+                        fontface="/home/charlesr/Meslo LG L Regular for Powerline.ttf",
                     ),
                     fill=event["bg"],
                     font_color=event["fg"],

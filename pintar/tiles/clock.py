@@ -35,7 +35,7 @@ class Clock(Tile):
 
         """
         num_cities = len(self.config["cities"])
-        layout = {"city": 90, "time": 190, "date": 70}
+        layout = {"city": 70, "time": 150, "date": 50}
         if self.config["alignment"] == "vertical":
             width = int(self.config["size_x"])
             height = int(self.config["size_y"] / num_cities)

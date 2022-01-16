@@ -51,7 +51,7 @@ class Bandwidth(Tile):
             """ SELECT non_negative_difference(first("bytes_recv"))*8/60 AS "input", non_negative_difference(first("bytes_sent"))*8/60 as "output" FROM "net" WHERE ("interface" = 'VERIZON') AND time >= now() - 15m GROUP BY time(1m) fill(null) """
         )
         # making the data reusable
-        title = generateBoundText("Home Bandwidth", factory.FontFactory(40))
+        title = generateBoundText("Home Bandwidth", factory.FontFactory(60))
         self.image.paste(title, (int((self.config["size_x"] - title.width) / 2), 0))
         y = title.height + 15
         data = [i for i in data["net"]]
@@ -61,10 +61,11 @@ class Bandwidth(Tile):
         m = max([max(recv), max(sent)])
         dates = [i["time"] for i in data]
         images = []
+        text = generateBoundText(self.__getLabel(recv[-1]), factory.FontFactory(40))
         for i in ["input", "output"]:
             df = pd.DataFrame(data, index=dates, columns=[i])
 
-            fig = px.area(df, height=100, width=self.config["size_x"] / 2)
+            fig = px.area(df, height=200, width=self.config["size_x"] / 2)
             fig.update_xaxes(visible=False, fixedrange=True)
             fig.update_yaxes(visible=False, fixedrange=True, range=[0, m])
             fig.update_layout(
@@ -78,14 +79,14 @@ class Bandwidth(Tile):
         self.image.paste(images[0], (0, y))
         self.image.paste(images[1], (middle, y))
         y += images[0].height
-        text = generateBoundText(self.__getLabel(recv[-1]), factory.FontFactory(30))
+        text = generateBoundText(self.__getLabel(recv[-1]), factory.FontFactory(50))
         self.image.paste(text, (int((middle - text.width) / 2), y))
-        text = generateBoundText(self.__getLabel(sent[-1]), factory.FontFactory(30))
+        text = generateBoundText(self.__getLabel(sent[-1]), factory.FontFactory(50))
         self.image.paste(text, (middle + int((middle - text.width) / 2), y))
-        y += text.height
-        text = generateBoundText("Input", factory.FontFactory(25))
+        y += text.height + 5
+        text = generateBoundText("Input", factory.FontFactory(35))
         self.image.paste(text, (int((middle - text.width) / 2), y))
-        text = generateBoundText("Output", factory.FontFactory(25))
+        text = generateBoundText("Output", factory.FontFactory(35))
         self.image.paste(text, (middle + int((middle - text.width) / 2), y))
 
         return self.image
