@@ -67,7 +67,7 @@ class Calendar(Tile):
                 width=self.config["size_x"],
                 underline=3,
             )
-            if current[1] + day.height > self.config["size_y"]:
+            if current[1] + (day.height * 1.2) > self.config["size_y"]:
                 break
             self.image.paste(day, current)
             current = (current[0], current[1] + day.height + 10)

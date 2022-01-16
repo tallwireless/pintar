@@ -34,6 +34,7 @@ tiles:
         size_y: 1404
         border_width: 10
         alignment: vertical
+        incremental_update: true
         border:
             right:
                 width: 5
